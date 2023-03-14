@@ -1,47 +1,80 @@
+const productos= [
+    {nombre:'Guitarra Epiphone',precio:2000},
+    {nombre:'Guitarra SG Epiphone',precio:1800},
+    {nombre:'Guitarra CORT',precio:1500},
+    {nombre:'Guitarra Ibañez',precio:2000}
+]
+let carritoDeCompra = []
 
-alert("Ingrese la opcion del producto que desee, para salir ingrese 0")
-let seleccionarProducto = parseInt(prompt("1-Guitarra $2000 2-Amplificador $800 3-Cables $20 4-Puas $10"))
-let seleccionarCantidad;
-let total = 0;
+let seleccionarProductos = prompt('¿Desea llevar algun producto? Responda Si o No')
 
-const cantidad = (cant, precio) => {
-    return cant * precio
+while(seleccionarProductos != 'Si' && seleccionarProductos != 'No'){
+    alert('Ingrese Si o No')
+    prompt('¿Desea llevar algun producto? Responda Si o No')
 }
 
-while (seleccionarProducto != 0){
-    switch(seleccionarProducto){
-        case 1:
-            seleccionarCantidad = parseInt(prompt("El producto seleccionado es Guitarra, indique la cantidad"))
-            total += cantidad(seleccionarCantidad, 2000)
-        break;
-        case 2:
-            seleccionarCantidad = parseInt(prompt("El producto seleccionado es Amplificado, indique la cantidad"))
-            total += cantidad(seleccionarCantidad, 800)
-        break;
-        case 3:
-            seleccionarCantidad = parseInt(prompt("El producto seleccionado es Cables, indique la cantidad"))
-            total += cantidad(seleccionarCantidad, 20)
-        break;
-        case 4:
-            seleccionarCantidad= parseInt(prompt("El producto seleccionado es Puas, indique la cantidad"))
-            total += cantidad(seleccionarCantidad, 10)
-        break;  
-        
-    default:
-        break
+if(seleccionarProductos === 'Si'){
+    alert('Estos son nuestros productos')
+    let nuestrosProductos = productos.map((producto) => producto.nombre + " " + producto.precio)
+    alert(nuestrosProductos.join(" - "))
+} else if (seleccionarProductos === 'No') {
+    alert('Hasta pronto')
+}
+
+while(seleccionarProductos != 'No'){
+    let producto = prompt ('Agrega un producto')
+    let precio = 0
+
+    if (producto == 'Guitarra Epiphone' || producto == 'Guitarra SG Epiphone' || producto == 'Guitarra CORT' || producto == 'Guitarra Ibañez' ){
+        switch (producto){
+            case 'Guitarra Epiphone':
+                precio = 2000;
+                break;
+            case 'Guitarra SG Epiphone':
+                precio = 1800;
+                break;
+            case 'Guitarra CORT':
+                precio = 1500;
+                break;
+            case 'Guitarra Ibañez':
+                precio = 2000;
+                break;
+        default:
+            break;
+        }
+    let unidades = parseInt(prompt('¿Cuantas unidades quiere llevar?'))
+    carritoDeCompra.push({producto, unidades, precio})
+    console.log(carritoDeCompra)
+    } else {
+        alert('No tenemos ese producto')
     }
-    seleccionarProducto = parseInt(prompt("1-Guitarra $2000 2-Amplificador $800 3-Cables $20 4-Puas $10"))
-}
 
-alert("El total de la compra es de: " + total)
+    seleccionarProductos = prompt('¿Desea seguir comprando?')
 
-const envio = () =>{
-    if (total >= 1500){
-        alert("El envio es gratuito")
-    } else{
-        total +=25
-        alert("El costo de envio es de $25, el total seria: " + total)
+    while(seleccionarProductos ==='No'){
+        alert('Muchas gracias por comprar')
+        carritoDeCompra.forEach((carritoDeCompraFinal) => {
+            console.log(`producto: ${carritoDeCompraFinal.producto}, unidades: ${carritoDeCompra.unidades}, total a pagar ${carritoDeCompraFinal.unidades * carritoDeCompraFinal.precio}`)
+        })
+    break
     }
 }
 
-envio()
+const total = carritoDeCompra.reduce((ecc, el) => ecc + el.precio * el.unidades, 0)
+console.log(`El total a pagar es: ${total}`)
+
+
+
+
+
+
+// const envio = () =>{
+//     if (total >= 1500){
+//         alert("El envio es gratuito")
+//     } else{
+//         total +=25
+//         alert("El costo de envio es de $25, el total seria: " + total)
+//     }
+// }
+
+// envio()
