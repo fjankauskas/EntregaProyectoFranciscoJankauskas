@@ -70,25 +70,3 @@ function storage(){
 }
 
 
-
-
-
-
-// function listadoProductos(){
-//     for (const producto of productos){
-//     let cardProducto = document.createElement('div')
-//     cardProducto.innerHTML = `
-//         <h3>${producto.nombre}</h3>
-//         <h3>${producto.precio}</h3>
-//         <p>${producto.img} </p>
-        
-//     `
-
-//     let listado = document.getElementById('productos')
-//     listado.append(cardProducto)
-//     }
-// }
-
-// listadoProductos()
-
-
