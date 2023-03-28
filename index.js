@@ -1,80 +1,94 @@
-const productos= [
-    {nombre:'Guitarra Epiphone',precio:2000},
-    {nombre:'Guitarra SG Epiphone',precio:1800},
-    {nombre:'Guitarra CORT',precio:1500},
-    {nombre:'Guitarra Ibañez',precio:2000}
+const stockProductos= [
+    {id:1,nombre:'Guitarra Epiphone',precio:2000,img:"img/guitarra-epiphone.jpg",},
+    {id:2,nombre:'Guitarra SG Epiphone',precio:1800,img:"img/guitarra-sg-epiphone.jpg",},
+    {id:3,nombre:'Guitarra CORT',precio:1500,img:"img/guitarra-cort.jpg",},
+    {id:4,nombre:'Guitarra Ibañez',precio:2000,img:"img/guitarra-ibañez.jpg",}
 ]
 let carritoDeCompra = []
 
-let seleccionarProductos = prompt('¿Desea llevar algun producto? Responda Si o No')
+document.addEventListener('DOMContentLoaded', () => {
+    carritoDeCompra = JSON.parse(localStorage.getItem('carrito')) ||  []
+    mostrarCarrito()
+})
 
-while(seleccionarProductos != 'Si' && seleccionarProductos != 'No'){
-    alert('Ingrese Si o No')
-    prompt('¿Desea llevar algun producto? Responda Si o No')
+const carritoCantidad = document.querySelector('#carritoCantidad')
+const productos = document.querySelector('#productos')
+
+stockProductos.forEach((prod) =>{
+    const {id,nombre, precio, img} = prod
+    productos.innerHTML +=`
+    <div class="card mt-3" style="width: 18rem;">
+    <img class="card-img-top mt-2" src="${img}" alt="Card image cap">
+    <div class="card-body">
+    <h5 class="card-title">${nombre}</h5>
+    <p class="card-text">Precio: ${precio}</p>
+    <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Producto</button>
+    </div>
+    </div>
+    `
+})
+
+function agregarProducto(id){
+    const agregadoDeProducto = stockProductos.find((prod) => prod.id === id)
+    carritoDeCompra.push(agregadoDeProducto)
+    mostrarCarrito()
 }
 
-if(seleccionarProductos === 'Si'){
-    alert('Estos son nuestros productos')
-    let nuestrosProductos = productos.map((producto) => producto.nombre + " " + producto.precio)
-    alert(nuestrosProductos.join(" - "))
-} else if (seleccionarProductos === 'No') {
-    alert('Hasta pronto')
+const mostrarCarrito = () => {
+    const mostradoDeProducto = document.querySelector('.modal .modal-body')
+
+    mostradoDeProducto.innerHTML = ''
+    carritoDeCompra.forEach((prod) =>{
+        const {id,nombre,img,precio} = prod
+        mostradoDeProducto.innerHTML += `
+        <div class=carrito-contenedor> </div>
+        <div> 
+        <img class=img-carrito src="${img}"/>
+        </div>
+
+        <div> 
+        <p>Producto: ${nombre} </p>
+        <p>precio: ${precio} </p>
+        <button onclick="eliminarProducto(${id})" class="btn btn-danger">Eliminar producto</button>
+        </div>
+        `
+    })
+
+    carritoCantidad.textContent = carritoDeCompra.length
+
+    storage()
 }
 
-while(seleccionarProductos != 'No'){
-    let producto = prompt ('Agrega un producto')
-    let precio = 0
-
-    if (producto == 'Guitarra Epiphone' || producto == 'Guitarra SG Epiphone' || producto == 'Guitarra CORT' || producto == 'Guitarra Ibañez' ){
-        switch (producto){
-            case 'Guitarra Epiphone':
-                precio = 2000;
-                break;
-            case 'Guitarra SG Epiphone':
-                precio = 1800;
-                break;
-            case 'Guitarra CORT':
-                precio = 1500;
-                break;
-            case 'Guitarra Ibañez':
-                precio = 2000;
-                break;
-        default:
-            break;
-        }
-    let unidades = parseInt(prompt('¿Cuantas unidades quiere llevar?'))
-    carritoDeCompra.push({producto, unidades, precio})
-    console.log(carritoDeCompra)
-    } else {
-        alert('No tenemos ese producto')
-    }
-
-    seleccionarProductos = prompt('¿Desea seguir comprando?')
-
-    while(seleccionarProductos ==='No'){
-        alert('Muchas gracias por comprar')
-        carritoDeCompra.forEach((carritoDeCompraFinal) => {
-            console.log(`producto: ${carritoDeCompraFinal.producto}, unidades: ${carritoDeCompra.unidades}, total a pagar ${carritoDeCompraFinal.unidades * carritoDeCompraFinal.precio}`)
-        })
-    break
-    }
+function eliminarProducto(id){
+    const idDeGuitarra = id
+    carritoDeCompra = carritoDeCompra.filter((guitarra) => guitarra.id !== idDeGuitarra)
+    mostrarCarrito()
 }
 
-const total = carritoDeCompra.reduce((ecc, el) => ecc + el.precio * el.unidades, 0)
-console.log(`El total a pagar es: ${total}`)
+function storage(){
+    localStorage.setItem("carrito", JSON.stringify(carritoDeCompra))
+}
 
 
 
 
 
 
-// const envio = () =>{
-//     if (total >= 1500){
-//         alert("El envio es gratuito")
-//     } else{
-//         total +=25
-//         alert("El costo de envio es de $25, el total seria: " + total)
+// function listadoProductos(){
+//     for (const producto of productos){
+//     let cardProducto = document.createElement('div')
+//     cardProducto.innerHTML = `
+//         <h3>${producto.nombre}</h3>
+//         <h3>${producto.precio}</h3>
+//         <p>${producto.img} </p>
+        
+//     `
+
+//     let listado = document.getElementById('productos')
+//     listado.append(cardProducto)
 //     }
 // }
 
-// envio()
+// listadoProductos()
+
+

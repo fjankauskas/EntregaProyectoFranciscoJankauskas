@@ -1,3 +1,29 @@
-body{
-    background-color: aqua;
+.imagen{
+    max-width:100%;
 }
+
+body {
+    background: linear-gradient(90deg, #fefefe 0%, #767f81 100%);
+    font-family: "Noto Sans", sans-serif;
+    align-items: center;
+}
+
+header{
+    background-color: black;
+}
+
+a{
+    cursor:pointer;
+}
+
+#productos{
+    display: flex;
+    gap: 3rem;
+}
+
+h1{
+    text-align: center;
+}
+
+
+

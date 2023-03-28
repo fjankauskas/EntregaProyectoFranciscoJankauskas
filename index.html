@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<link>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogo de Guitarras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+
     <link rel="stylesheet" href="./css/style.css">
-</head>
+
 <body>
     <header>
         <a href=>
@@ -20,56 +26,58 @@
                     <form action="">
                         <input type="text" placeholder="Buscar...">
                     </form>
-                    <li><a href="">Inicio</a></li>
-                    <li><a href="">Guitarras</a></li>
-                    <li><a href="">Contactanos</a></li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                        <a class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#modal">
+                            <i class="bi bi-cart mx-5" id="carritoCantidad">0</i>
+                        </a>
+                    </li>
+                    </ul>
                 </ul>
             </nav>
     </div>
     </header>
+    <main>
+        <div class="row mt-5" id="contenedor"></div>
+    </main>
+
+    <div class="container-xl">
+        <div class="modal" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Carrito</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="vaciarCarrito">Vaciar Carrito</button>
+            <button type="button" id="procesarCompra" class="btn btn-primary">Continuar compra</button>
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <span>Precio total:</span>
+        <p class="text-center" id="precioTotal"></p>
+            </div>
+        </div>
+        </div>
+    </div>
     <h1 class="titulo">Bienvenido al catalogo</h1>
     </div>
 
-        <section class="seccion">
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra Epiphone</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra Epiphone</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra SG Epiphone</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra Fender</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra Epiphone</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra SX</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra Cort</p><p>Precio X</p>
-            </div>
-            <div class="guitarra">
-                <a href=""><img src="" alt=""></a>
-                <p> Guitarra Ibañez</p><p>Precio X</p>
-            </div>
-    </section>
+    <div id="productos">
+        
+    </div>
     
+<script src="index.js"></script>
+<script src="bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </body>
 <footer class="footer">
     <p>Contactanos</p>
     <a href=>""<img class="iconos" src="" alt=""></a>
     <a href=""><img class="iconos" src="" alt=""></a>
 </footer>
-<script src="./index.js"></script>
 </html>
