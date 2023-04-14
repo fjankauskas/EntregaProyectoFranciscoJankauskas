@@ -1,0 +1,30 @@
+[
+    {
+    "id":1,
+    "nombre":"Guitarra Epiphone",
+    "cantidad":1,
+    "precio":2000,
+    "img":"img/guitarra-epiphone.jpg"
+    },
+    {
+    "id":2,
+    "nombre":"Guitarra SG Epiphone",
+    "cantidad":1,
+    "precio":1800,
+    "img":"img/guitarra-sg-epiphone.jpg"
+    },
+    {
+    "id":3,
+    "nombre":"Guitarra CORT",
+    "cantidad":1,
+    "precio":1500,
+    "img":"img/guitarra-cort.jpg"
+    },
+    {
+    "id":4,
+    "nombre":"Guitarra Ibañez",
+    "cantidad":1,
+    "precio":2000,
+    "img":"img/guitarra-ibañez.jpg"
+    }
+]

@@ -1,45 +1,77 @@
-const stockProductos= [
-    {id:1,nombre:'Guitarra Epiphone',precio:2000,img:"img/guitarra-epiphone.jpg",},
-    {id:2,nombre:'Guitarra SG Epiphone',precio:1800,img:"img/guitarra-sg-epiphone.jpg",},
-    {id:3,nombre:'Guitarra CORT',precio:1500,img:"img/guitarra-cort.jpg",},
-    {id:4,nombre:'Guitarra Ibañez',precio:2000,img:"img/guitarra-ibañez.jpg",}
-]
-let carritoDeCompra = []
-
-document.addEventListener('DOMContentLoaded', () => {
-    carritoDeCompra = JSON.parse(localStorage.getItem('carrito')) ||  []
-    mostrarCarrito()
-})
-
+let carritoDeCompra = JSON.parse(localStorage.getItem('carrito')) || [];
+let data = []
 const carritoCantidad = document.querySelector('#carritoCantidad')
 const productos = document.querySelector('#productos')
+const vaciarCarrito = document.querySelector('#vaciarCarrito')
+const precioTotal = document.querySelector('#precioTotal')
+const procesarCompra = document.querySelector('#procesarCompra')
 
-stockProductos.forEach((prod) =>{
-    const {id,nombre, precio, img} = prod
-    productos.innerHTML +=`
-    <div class="card mt-3" style="width: 18rem;">
-    <img class="card-img-top mt-2" src="${img}" alt="Card image cap">
-    <div class="card-body">
-    <h5 class="card-title">${nombre}</h5>
-    <p class="card-text">Precio: ${precio}</p>
-    <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Producto</button>
-    </div>
-    </div>
-    `
+
+
+async function fetchData() {
+    const res = await fetch("data.json")
+    data = await res.json()
+    data.forEach((prod) =>{
+        const {id,nombre, precio, img, cantidad} = prod
+        productos.innerHTML +=`
+        <div class="card mt-3" style="width: 18rem;">
+        <img class="card-img-top mt-2" src="${img}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${nombre}</h5>
+        <p class="card-text">Precio: ${precio}</p>
+        <p class="card-text">Cantidad: ${cantidad}</p>
+        <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Producto</button>
+        </div>
+        </div>
+        `
+    })
+}
+
+function agregarProducto(id) {
+    const existe = carritoDeCompra.some((prod) => prod.id === id);
+
+    if (existe) {
+        const prod = carritoDeCompra.find((prod) => prod.id === id);
+        prod.cantidad++;
+    } else {
+        const item = data.find((prod) => prod.id === id);
+        carritoDeCompra.push({ ...item, cantidad: 1 });
+    }
+    mostrarCarrito();
+}
+
+fetchData();
+
+
+procesarCompra.addEventListener('click',() =>{
+    if(carritoDeCompra.length === 0){
+        Swal.fire({
+            title: "¡Tu carrito está vacio!",
+            text: "Compra algo para continuar con la compra",
+            icon: "error",
+            confirmButtonText: "Aceptar",
+        });
+    } else {
+        location.href = "./html/compra.html"
+        procesarPedido()
+    }
 })
 
-function agregarProducto(id){
-    const agregadoDeProducto = stockProductos.find((prod) => prod.id === id)
-    carritoDeCompra.push(agregadoDeProducto)
+
+vaciarCarrito.addEventListener('click', () =>{
+    carritoDeCompra.length = []
     mostrarCarrito()
-}
+})
+
+
+
 
 const mostrarCarrito = () => {
     const mostradoDeProducto = document.querySelector('.modal .modal-body')
 
     mostradoDeProducto.innerHTML = ''
     carritoDeCompra.forEach((prod) =>{
-        const {id,nombre,img,precio} = prod
+        const {id,nombre,img,precio,cantidad} = prod
         mostradoDeProducto.innerHTML += `
         <div class=carrito-contenedor> </div>
         <div> 
@@ -48,16 +80,27 @@ const mostrarCarrito = () => {
 
         <div> 
         <p>Producto: ${nombre} </p>
-        <p>precio: ${precio} </p>
+        <p>Precio: ${precio} </p>
+        <p>Cantidad: ${cantidad} </p>
         <button onclick="eliminarProducto(${id})" class="btn btn-danger">Eliminar producto</button>
         </div>
         `
     })
 
+    if(carritoDeCompra.length === 0){
+        mostradoDeProducto.innerHTML = `
+        <p class="text-center text-primary parrafo">Aun no has agregado nada</p>
+        `
+    }
+
     carritoCantidad.textContent = carritoDeCompra.length
 
+    if(precioTotal){
+    precioTotal.textContent = carritoDeCompra.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
+    }
     storage()
 }
+
 
 function eliminarProducto(id){
     const idDeGuitarra = id
@@ -68,5 +111,8 @@ function eliminarProducto(id){
 function storage(){
     localStorage.setItem("carrito", JSON.stringify(carritoDeCompra))
 }
+
+window.addEventListener('load', mostrarCarrito);
+
 
 
